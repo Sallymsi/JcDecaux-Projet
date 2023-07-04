@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styleSheets %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    {% endblock %}
+    
+    <title>{% block title %}Carte JCDecaux{% endblock %}</title>
+</head>
+<body>
+    {% include "partials/_header.html" %}
+    <div class="background"> 
+        {% block body %}
+            <h1>Carte station vélo</h1>
+            <div class="iframeBlock">{{ iframe|safe }}</div>
+
+            <div class="block">
+                <div class="city-list-index">
+                    {% for ville in villes %}
+                        <a href="/{{ ville }}" class="city">{{ ville | capitalize }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

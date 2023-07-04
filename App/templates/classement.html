@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>Classement</title>
+</head>
+<body>
+    {% include "partials/_header.html" %}
+    <h1>Classement</h1>
+
+    <div>
+        {% for info in infos %}
+            <p>Station : {{ info.name }}</p>
+            <p>Ville : {{ info.contract_name | capitalize }}</p>
+            <p>Stand de vélo : {{ info.bike_stands }}</p>
+            <p>Vélo disponible : {{ info.available_bikes }}</p> <br> <br>
+            {{info}}
+        {% endfor %}
+    </div>
+</body>
+</html>

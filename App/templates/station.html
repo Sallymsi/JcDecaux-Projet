@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>{{ info.name }}</title>
+</head>
+<body>
+    {% include "partials/_header.html" %}
+    <h1>Station : {{ info.name }} ({{ info.contractName | capitalize }})</h1>
+        {{ iframe|safe }}
+    <div>
+        <p>Statut : {{ info.status }}</p>
+        <p>Adresse : {{ info.address }}</p>
+        <p>Terminal de paiement : {{ info.banking }}</p>
+        <p>Capacité totale : {{ info.totalStands.capacity }}</p>
+        <p>Disponibilité : {{ pourcentDispo }} des vélos sont disponibles.</p>
+        <p>Electrique : {{ pourcentElec }} des vélos disponibles sont éléctriques.</p>
+        <p>Vélo(s) :{{ info.totalStands.availabilities.bikes }}</p>
+        <p>Vélo(s) mécanique(s) : {{ info.totalStands.availabilities.mechanicalBikes }}</p>
+        <p>Vélo(s) éléctrique(s) : {{ info.totalStands.availabilities.electricalBikes }}</p>
+    </div>
+</body>
+</html>
