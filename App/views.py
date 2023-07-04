@@ -67,7 +67,7 @@ def city(city):
     response = requests.get(urlContract, headers=app.config['HEADERS']).json()
     stations = []
     locations = []
-
+    
     callback = ('function (row) {' 
                 'var marker = L.marker(new L.LatLng(row[0], row[1]));'
                 'var icon = L.AwesomeMarkers.icon({'
