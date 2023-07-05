@@ -14,20 +14,14 @@ def index():
     urlStation = "https://api.jcdecaux.com/vls/v3/contracts?apiKey={key}".format(key = app.config['SECRET_KEY'])
 
     responseGlobal = requests.get(urlGlobal, headers=app.config['HEADERS']).json()
-    responseVilles = requests.get(urlStation, headers=app.config['HEADERS']).json()
-    villes = []
+    responseCity = requests.get(urlStation, headers=app.config['HEADERS']).json()
+
     locations = []
-
-    for info in responseVilles:
-        isPresent = info["name"] in villes
-        if not isPresent:
-            villes.append(info["name"])
-
-    villes.sort()
 
     m = folium.Map(
         location=[48.29649, 4.07360],
         zoom_start=5,
+        width="100%"
     )
 
     for info in responseGlobal:
@@ -35,24 +29,21 @@ def index():
     
     plugins.FastMarkerCluster(locations, callback=callbackIndex()).add_to(m)
 
-    m.get_root().width = "100%"
     m.get_root().height = "600px"
     iframe = m.get_root()._repr_html_()
 
-    return render_template("index.html", iframe=iframe, villes=villes)
+    return render_template("index.html", iframe=iframe, villes=listCity(responseCity))
 
 @app.route("/<contract>")
 def city(contract):
     urlContract = "https://api.jcdecaux.com/vls/v3/stations?contract={contract}&apiKey={key}".format(contract = contract, key = app.config['SECRET_KEY'])
-
     response = requests.get(urlContract, headers=app.config['HEADERS']).json()
-    stations = []
     locations = []
-
 
     m = folium.Map(
         location=[48.29649, 4.07360],
         zoom_start=5,
+        width="100%"
     ) 
 
     for info in response:
@@ -60,21 +51,10 @@ def city(contract):
     
     plugins.FastMarkerCluster(locations, callback=callbackCity()).add_to(m)
 
-    m.get_root().width = "100%"
     m.get_root().height = "600px"
     iframe = m.get_root()._repr_html_()
 
-    for info in response:
-        isPresent = info['name'] in stations
-        if not isPresent:
-            stations.append(info)
-
-    def myFunc(e):
-        return e['number']
-    
-    stations.sort(key=myFunc)
-
-    return render_template("city.html", infos=stations, iframe=iframe)
+    return render_template("city.html", contract=contract, infos=listStation(response), iframe=iframe)
 
 @app.route("/<contract>/<number>")
 def station(contract, number):
@@ -95,7 +75,7 @@ def station(contract, number):
     m.get_root().height = "600px"
     iframe = m.get_root()._repr_html_()
 
-    return render_template("station.html", iframe=iframe, info=response, pourcentDispo=pourcentDispo(response), pourcentElec=pourcentElec(response))
+    return render_template("station.html", iframe=iframe, info=response, pourcentDispo=pourcentDispo(response["totalStands"]["availabilities"]["bikes"], response["totalStands"]["capacity"]), pourcentElec=pourcentElec(response["totalStands"]["availabilities"]["electricalBikes"], response["totalStands"]["availabilities"]["bikes"]))
 
 @app.route("/classement")
 def classement():
@@ -111,7 +91,6 @@ def classement():
 @app.route("/classement/<contract>")
 def statistique(contract):
     urlContract = "https://api.jcdecaux.com/vls/v3/stations?contract={contract}&apiKey={key}".format(contract = contract, key = app.config['SECRET_KEY'])
-    contract = contract
 
     response = requests.get(urlContract, headers=app.config['HEADERS'])
     

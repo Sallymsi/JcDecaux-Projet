@@ -8,6 +8,7 @@
 </head>
 <body>
     {% include "partials/_header.html" %}
+    <h1 class="title">Ville de {{ contract | capitalize }}</h1>
     <div class="iframeBlock">{{ iframe|safe }}</div>
     <div class="city-list">
         {% if infos %}
@@ -15,7 +16,7 @@
                 <a href="/{{ info.contractName }}/{{ info.number }}" class="city">{{ info.name }}</a>
             {% endfor %}
         {% else %}
-                <p class="city">RIEN</p>
+                <p class="city"><strong>Problème API : </strong>La requête pour cette ville renvoie un tableau vide pour le moment</p>
         {% endif %}
     </div>
 </body>

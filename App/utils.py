@@ -45,23 +45,47 @@ def callbackCity():
 
     return callback
 
+def listCity(response):
+    city = []
+    for info in response:
+        isPresent = info["name"] in city
+        if not isPresent:
+            city.append(info["name"])
 
-def pourcentDispo(response):
+    city.sort()
+
+    return city
+
+def listStation(response):
+    stations = []
+    for info in response:
+        isPresent = info['name'] in stations
+        if not isPresent:
+            stations.append(info)
+
+    def myFunc(e):
+        return e['number']
+    
+    stations.sort(key=myFunc)
+
+    return stations
+
+def pourcentDispo(available, capacity):
     try:
-        pourcentDispo = (response["totalStands"]["availabilities"]["bikes"] / response["totalStands"]["capacity"]) * 100
+        pourcentDispo = (available / capacity) * 100
     except ZeroDivisionError:
         pourcentDispo = 0
     
-    return str("%.2f" % pourcentDispo) + " %"
+    return str("%.1f" % pourcentDispo) + " %"
 
 
-def pourcentElec(response):
+def pourcentElec(electrical, available):
     try:
-        pourcentElec = (response["totalStands"]["availabilities"]["electricalBikes"] / response["totalStands"]["availabilities"]["bikes"]) * 100
+        pourcentElec = (electrical / available) * 100
     except ZeroDivisionError:
         pourcentElec = 0
 
-    return str("%.2f" % pourcentElec) + " %"
+    return str("%.1f" % pourcentElec) + " %"
 
 
 def classementCity(response):
@@ -72,29 +96,15 @@ def classementCity(response):
         responseCity = requests.get(urlContract, headers=headers)
         infoCity = responseCity.json()
         standTotal = 0
-        availabilitiesBike = 0
+        availableBike = 0
         elecBike = 0
 
         for stand in infoCity:
             standTotal = standTotal + stand['totalStands']['capacity']
-            availabilitiesBike = availabilitiesBike + stand['totalStands']['availabilities']['bikes']
+            availableBike = availableBike + stand['totalStands']['availabilities']['bikes']
             elecBike = elecBike + stand['totalStands']['availabilities']['electricalBikes']
-        
-        try:
-            pourcentDispo = (availabilitiesBike / standTotal) * 100
-        except ZeroDivisionError:
-            pourcentDispo = 0
 
-        pourcentDispo = str("%.2f" % pourcentDispo) + " %"
-
-        try:
-            pourcentElec = (elecBike / availabilitiesBike) * 100
-        except ZeroDivisionError:
-            pourcentElec = 0
-        
-        pourcentElec = str("%.2f" % pourcentElec) + " %"
-
-        stations.append([info['name'], standTotal, availabilitiesBike, pourcentDispo, pourcentElec])
+        stations.append([info['name'], standTotal, availableBike, pourcentDispo(availableBike, standTotal), pourcentElec(elecBike, availableBike)])
     
     def myFunc(e):
         return e[1]
