@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>Classement de {{ contract | capitalize }}</title>
+</head>
+<body>
+    {% include "partials/_header.html" %}
+    <h1 class="title">Classement des stations de {{ contract | capitalize }}</h1>
+
+    <div class="section">
+        {% for info in infos %}
+            {% if loop.index <= 50 %}
+                <a href="/{{ info.contractName }}/{{ info.number }}" class="stat-block">
+                    <div class="number">
+                        <h2>{{ loop.index }}</h2>
+                    </div>
+                    <div>
+                        <p><strong>Station : </strong>{{info.name}}</p>
+                        <p><strong>Vélo(s) disponible(s): </strong>{{info.totalStands.availabilities.bikes}}</p>
+                        <p><strong>Vélo(s) mécanique(s) : </strong>{{info.totalStands.availabilities.mechanicalBikes}}</p>
+                        <p><strong>Vélo(s) éléctrique(s) : </strong>{{info.totalStands.availabilities.electricalBikes}}</p>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

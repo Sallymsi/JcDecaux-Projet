@@ -8,18 +8,15 @@
 </head>
 <body>
     {% include "partials/_header.html" %}
-    <h1>Station : {{ info.name }} ({{ info.contractName | capitalize }})</h1>
+    <h1 class="title">Station : {{ info.name }} ({{ info.contractName | capitalize }})</h1>
         {{ iframe|safe }}
-    <div>
-        <p>Statut : {{ info.status }}</p>
-        <p>Adresse : {{ info.address }}</p>
-        <p>Terminal de paiement : {{ info.banking }}</p>
-        <p>Capacité totale : {{ info.totalStands.capacity }}</p>
-        <p>Disponibilité : {{ pourcentDispo }} des vélos sont disponibles.</p>
-        <p>Electrique : {{ pourcentElec }} des vélos disponibles sont éléctriques.</p>
-        <p>Vélo(s) :{{ info.totalStands.availabilities.bikes }}</p>
-        <p>Vélo(s) mécanique(s) : {{ info.totalStands.availabilities.mechanicalBikes }}</p>
-        <p>Vélo(s) éléctrique(s) : {{ info.totalStands.availabilities.electricalBikes }}</p>
+    <div class="display-station">
+        <p><strong>Statut : </strong>{{ info.status }}</p>
+        <p><strong>Adresse : </strong>{{ info.address }}</p>
+        <p><strong>Capacité totale : </strong>{{ info.totalStands.capacity }}</p>
+        <p><strong>Vélo(s) disponible(s) : </strong>{{ info.totalStands.availabilities.bikes }} ({{ pourcentDispo }} des vélos sont disponibles.)</p>
+        <p><strong>Vélo(s) mécanique(s) : </strong>{{ info.totalStands.availabilities.mechanicalBikes }}</p>
+        <p><strong>Vélo(s) éléctrique(s) : </strong>{{ info.totalStands.availabilities.electricalBikes }} ({{ pourcentElec }} des vélos disponibles sont éléctriques.)</p>
     </div>
 </body>
 </html>

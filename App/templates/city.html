@@ -10,9 +10,13 @@
     {% include "partials/_header.html" %}
     <div class="iframeBlock">{{ iframe|safe }}</div>
     <div class="city-list">
-        {% for info in infos %}
-            <a href="/{{ info.contractName }}/{{ info.number }}" class="city">{{ info.name }}</a>
-        {% endfor %}
+        {% if infos %}
+            {% for info in infos %}
+                <a href="/{{ info.contractName }}/{{ info.number }}" class="city">{{ info.name }}</a>
+            {% endfor %}
+        {% else %}
+                <p class="city">RIEN</p>
+        {% endif %}
     </div>
 </body>
 </html>

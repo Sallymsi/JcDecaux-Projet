@@ -4,19 +4,27 @@
 <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-    <title>Classement</title>
+    <title>Classement par ville</title>
 </head>
 <body>
     {% include "partials/_header.html" %}
-    <h1>Classement</h1>
+    <h1>Classement par ville</h1>
 
-    <div>
-        {% for info in infos %}
-            <p>Station : {{ info.name }}</p>
-            <p>Ville : {{ info.contract_name | capitalize }}</p>
-            <p>Stand de vélo : {{ info.bike_stands }}</p>
-            <p>Vélo disponible : {{ info.available_bikes }}</p> <br> <br>
-            {{info}}
+    <div class="section">
+        {% for info in stations %}
+            {% if loop.index <= 50 %}
+                <a class="stat-block" href="/classement/{{ info[0] }}">
+                    <div class="number">
+                        <h2>{{ loop.index }}</h2>
+                    </div>
+                    <div>
+                        <p><strong>Ville : </strong>{{ info[0] | capitalize }}</p>
+                        <p><strong>Stand de vélo : </strong>{{ info[1] }}</p>
+                        <p><strong>Vélo(s) : </strong>{{ info[2] }} ({{info[3]}} des vélos sont disponibles)</p>
+                        <p><strong>Vélo(s) éléctrique(s) disponible(s) : </strong>{{ info[4] }}</p>
+                    </div>
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 </body>
