@@ -65,6 +65,7 @@ body {
   border-radius: 5px;
   padding: 5px;
   margin: 10px;
+  text-align: center;
 }
 
 iframe {
@@ -99,7 +100,7 @@ header img {
 .stat-block {
   display: flex;
   align-items: center;
-  padding: 10px 10px 10px 40px;
+  padding: 10px 10px 10px 30px;
   margin: 10px;
   color: white;
   border: 1px solid #2F86CC;
@@ -112,7 +113,7 @@ header img {
 }
 
 .number {
-  width: 10%;
+  width: 7%;
   padding: 10px;
   color: white;
   font-size: 30px;

@@ -38,7 +38,7 @@ def callbackCity():
                 "const display_bike = {text: row[4]};"
                 "const display_elec = {text: row[5]};"
                 "const display_meca = {text: row[6]};"
-                "var mytext = $(`<div id='mytext' class='display_text' style='width: 100.0%; height: 100.0%;'> Ville : ${display_contract.text} <br> Arrêt : ${display_number.text} <br> Vélo(s) disponible(s) : ${display_bike.text} <br> Mecanique : ${display_meca.text} <br> Electrique : ${display_elec.text}</div>`)[0];"
+                "var mytext = $(`<div id='mytext' class='display_text' style='width: 100.0%; height: 100.0%;'> Ville : ${display_contract.text} <br> Arrêt : ${display_number.text} <br> Vélo(s) disponible(s) : ${display_bike.text} <br> Mécanique : ${display_meca.text} <br> Éléctrique : ${display_elec.text}</div>`)[0];"
                 "popup.setContent(mytext);"
                 "marker.bindPopup(popup);"
                 'return marker};')
@@ -78,7 +78,6 @@ def pourcentDispo(available, capacity):
     
     return str("%.1f" % pourcentDispo) + " %"
 
-
 def pourcentElec(electrical, available):
     try:
         pourcentElec = (electrical / available) * 100
@@ -86,7 +85,6 @@ def pourcentElec(electrical, available):
         pourcentElec = 0
 
     return str("%.1f" % pourcentElec) + " %"
-
 
 def classementCity(response):
     stations = []
@@ -104,7 +102,7 @@ def classementCity(response):
             availableBike = availableBike + stand['totalStands']['availabilities']['bikes']
             elecBike = elecBike + stand['totalStands']['availabilities']['electricalBikes']
 
-        stations.append([info['name'], standTotal, availableBike, pourcentDispo(availableBike, standTotal), pourcentElec(elecBike, availableBike)])
+        stations.append([info['name'], standTotal, availableBike, pourcentDispo(availableBike, standTotal),elecBike, pourcentElec(elecBike, availableBike)])
     
     def myFunc(e):
         return e[1]

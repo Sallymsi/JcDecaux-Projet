@@ -8,7 +8,7 @@
 </head>
 <body>
     {% include "partials/_header.html" %}
-    <h1>Classement par ville</h1>
+    <h1 class="title">Classement par ville</h1>
 
     <div class="section">
         {% for info in stations %}
@@ -21,7 +21,7 @@
                         <p><strong>Ville : </strong>{{ info[0] | capitalize }}</p>
                         <p><strong>Stand de vélo : </strong>{{ info[1] }}</p>
                         <p><strong>Vélo(s) : </strong>{{ info[2] }} ({{info[3]}} des vélos sont disponibles)</p>
-                        <p><strong>Vélo(s) éléctrique(s) disponible(s) : </strong>{{ info[4] }}</p>
+                        <p><strong>Vélo(s) éléctrique(s) disponible(s) : </strong>{{ info[4] }} ({{ info[5] }})</p>
                     </div>
                 </a>
             {% endif %}
