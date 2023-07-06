@@ -86,6 +86,14 @@ def pourcentElec(electrical, available):
 
     return str("%.1f" % pourcentElec) + " %"
 
+def pourcentMeca(mechanical, available):
+    try:
+        pourcentMeca = (mechanical / available) * 100
+    except ZeroDivisionError:
+        pourcentMeca = 0
+
+    return str("%.1f" % pourcentMeca) + " %"
+
 def classementCity(response):
     stations = []
     for info in response:
