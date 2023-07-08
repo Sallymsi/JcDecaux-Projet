@@ -80,7 +80,7 @@ def station(contract, number):
     m.get_root().height = "600px"
     iframe = m.get_root()._repr_html_()
 
-    return render_template("station.html", iframe=iframe, info=response, pourcentDispo=pourcentDispo(response["totalStands"]["availabilities"]["bikes"], response["totalStands"]["capacity"]), pourcentElec=pourcentElec(response["totalStands"]["availabilities"]["electricalBikes"], response["totalStands"]["availabilities"]["bikes"]), pourcentMeca=pourcentMeca(response["totalStands"]["availabilities"]["mechanicalBikes"], response["totalStands"]["availabilities"]["bikes"]))
+    return render_template("station.html", iframe=iframe, info=response, pourcentDispo=pourcentDispo(response["totalStands"]["availabilities"]["bikes"], response["totalStands"]["capacity"]), pourcentElec=pourcentType(response["totalStands"]["availabilities"]["electricalBikes"], response["totalStands"]["availabilities"]["bikes"]), pourcentMeca=pourcentType(response["totalStands"]["availabilities"]["mechanicalBikes"], response["totalStands"]["availabilities"]["bikes"]))
 
 # Page de classement par ville
 @app.route("/classement")

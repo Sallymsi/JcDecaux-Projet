@@ -78,21 +78,13 @@ def pourcentDispo(available, capacity):
     
     return str("%.1f" % pourcentDispo) + " %"
 
-def pourcentElec(electrical, available):
+def pourcentType(type, available):
     try:
-        pourcentElec = (electrical / available) * 100
+        pourcentType = (type / available) * 100
     except ZeroDivisionError:
-        pourcentElec = 0
+        pourcentType = 0
 
-    return str("%.1f" % pourcentElec) + " %"
-
-def pourcentMeca(mechanical, available):
-    try:
-        pourcentMeca = (mechanical / available) * 100
-    except ZeroDivisionError:
-        pourcentMeca = 0
-
-    return str("%.1f" % pourcentMeca) + " %"
+    return str("%.1f" % pourcentType) + " %"
 
 def classementCity(response):
     stations = []
@@ -110,7 +102,7 @@ def classementCity(response):
             availableBike = availableBike + stand['totalStands']['availabilities']['bikes']
             elecBike = elecBike + stand['totalStands']['availabilities']['electricalBikes']
 
-        stations.append([info['name'], standTotal, availableBike, pourcentDispo(availableBike, standTotal),elecBike, pourcentElec(elecBike, availableBike)])
+        stations.append([info['name'], standTotal, availableBike, pourcentDispo(availableBike, standTotal),elecBike, pourcentType(elecBike, availableBike)])
     
     def myFunc(e):
         return e[1]
