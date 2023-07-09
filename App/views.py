@@ -4,7 +4,7 @@ import folium
 from folium import plugins
 from .utils import *
 
-# Initialisation de Flask
+# Création d'une instance de la classe Flask
 app = Flask(__name__)
 
 # Initialisation du fichier config.py

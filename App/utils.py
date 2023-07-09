@@ -1,5 +1,6 @@
 import requests
 
+# Callback de mise en forme des popup des points sur la maps de la page principale (index)
 def callbackIndex():
     callback = ('function (row) {' 
                 'var marker = L.marker(new L.LatLng(row[0], row[1]));'
@@ -20,7 +21,7 @@ def callbackIndex():
                 "marker.bindPopup(popup);"
                 'return marker};')
     return callback
-
+# Callback mise en forme des popup des points sur la maps de la page secondaire (city)
 def callbackCity():
     callback = ('function (row) {' 
                 'var marker = L.marker(new L.LatLng(row[0], row[1]));'
@@ -44,7 +45,7 @@ def callbackCity():
                 'return marker};')
 
     return callback
-
+# Renvoie une liste des villes sans doublon
 def listCity(response):
     city = []
     for info in response:
@@ -55,7 +56,7 @@ def listCity(response):
     city.sort()
 
     return city
-
+# Renvoie une liste des stations d'une ville dans l'ordre en fonctions de son numéro
 def listStation(response):
     stations = []
     for info in response:
@@ -69,7 +70,7 @@ def listStation(response):
     stations.sort(key=myFunc)
 
     return stations
-
+# Renvoie la disponibilité de vélo en pourcentage
 def pourcentDispo(available, capacity):
     try:
         pourcentDispo = (available / capacity) * 100
@@ -77,7 +78,7 @@ def pourcentDispo(available, capacity):
         pourcentDispo = 0
     
     return str("%.1f" % pourcentDispo) + " %"
-
+# Renvoie le pourcentage de velo disponible en fonction du type (éléctrique ou mécanique)
 def pourcentType(type, available):
     try:
         pourcentType = (type / available) * 100
@@ -85,7 +86,7 @@ def pourcentType(type, available):
         pourcentType = 0
 
     return str("%.1f" % pourcentType) + " %"
-
+# Renvoie le classement des villes en fonction de la capacité totale de vélo sous forme de liste
 def classementCity(response):
     stations = []
     for info in response:
@@ -110,7 +111,7 @@ def classementCity(response):
     stations.sort(reverse=True, key=myFunc)
 
     return stations
-
+# Renvoie le classement des stations d'une ville en fonction de la capacité totale de vélo sous forme de liste
 def classementStation(response):
     stations = []
     for info in response:
@@ -119,7 +120,7 @@ def classementStation(response):
             stations.append(info)
 
     def myFunc(e):
-        return e['totalStands']['availabilities']['bikes']
+        return e['totalStands']['capacity']
     
     stations.sort(reverse=True, key=myFunc)
 

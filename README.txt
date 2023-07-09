@@ -1,12 +1,14 @@
 ÉTAPE 1 : 
 
-- Pip install flask
-- Pip install folium
+- lancer une console de type Bash
+- Taper 'py -3 -m venv .env'
+- Taper 'source .env/Scripts/activate afin d'activer l'environnement virtuel.
 
 ÉTAPE 2 : 
 
-- lancer un console de type Bash (important)
-- Taper le chemin complet vers le fichier ./env/Scripts/activate afin d'activer l'environnement virtuel.
+- Pip install Flask
+- Pip install requests
+- Pip install folium
 
 ÉTAPE 3 : 
 
